@@ -1,0 +1,32 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "watch": "vite build --watch"
+    },
+    "devDependencies": {
+        "axios": "^1.6.8",
+        "laravel-vite-plugin": "^1.0.2",
+        "vite": "^5.2.11"
+    },
+    "dependencies": {
+        "@hotwired/stimulus": "^3.2.2",
+        "@hotwired/turbo": "^8.0.4",
+        "@tabler/icons-webfont": "^3.4.0",
+        "apexcharts": "^3.49.1",
+        "autosize": "^6.0.1",
+        "bootstrap": "^5.3.3",
+        "fast-glob": "^3.3.2",
+        "fs": "^0.0.1-security",
+        "fs-extra": "^11.2.0",
+        "imask": "^7.6.0",
+        "jquery": "^3.7.1",
+        "litepicker": "^2.0.12",
+        "path": "^0.12.7",
+        "sass": "^1.77.1",
+        "select2": "^4.1.0-rc.0",
+        "vite-plugin-manifest-sri": "^0.2.0"
+    }
+}
