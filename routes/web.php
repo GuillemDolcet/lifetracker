@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\Auth\SocialController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/session/locale/{language}', [SessionController::class, 'locale'])->name('session.locale');
@@ -24,4 +25,8 @@ Route::prefix('auth')->group(static function (): void {
     Route::middleware('auth')->group(static function (): void {
         Route::delete('logout', [SessionController::class, 'destroy'])->name('logout');
     });
+});
+
+Route::middleware('auth')->group(static function (): void {
+    Route::get('/', [HomeController::class, 'index'])->name('index');
 });
