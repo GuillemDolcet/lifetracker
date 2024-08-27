@@ -50,7 +50,7 @@ final class Arr extends LaravelArr
     {
         $result = true;
         foreach ($ary as $key => $value) {
-            if (isset($array[$key]) && $array[$key] != $value) {
+            if (isset($array[$key]) && $array[$key] !== $value) {
                 $result = false;
                 break;
             }

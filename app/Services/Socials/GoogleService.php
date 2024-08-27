@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Socials;
 
 use App\Contracts\SocialAuth;
@@ -7,7 +9,7 @@ use App\Http\Resources\SocialUser;
 use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
 
-class GoogleService implements SocialAuth
+final class GoogleService implements SocialAuth
 {
     public function redirect(): RedirectResponse
     {

@@ -51,11 +51,8 @@ final class User extends Authenticatable
     }
 
     // RELATIONS //
-
     /**
      * Socials relation.
-     *
-     * @return BelongsToMany
      */
     public function socials(): BelongsToMany
     {

@@ -125,5 +125,5 @@ return [
         'store'  => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'portfolio_url' => env('PORTFOLIO_URL', 'https://guillemdolcet.com')
+    'portfolio_url' => env('PORTFOLIO_URL', 'https://guillemdolcet.com'),
 ];

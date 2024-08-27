@@ -36,11 +36,11 @@ final class DatabaseSeeder extends Seeder
         ]);
 
         Social::create([
-           'name' => 'google'
+            'name' => 'google',
         ]);
 
         Social::create([
-            'name' => 'github'
+            'name' => 'github',
         ]);
     }
 }

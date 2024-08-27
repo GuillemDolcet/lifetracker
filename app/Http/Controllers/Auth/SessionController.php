@@ -136,8 +136,7 @@ final class SessionController extends Controller
      * [POST] /session/mode/{mode}
      * session.mode
      *
-     * Change to dark/light mode
-     *
+     * Changes the app mode (dark or light)
      */
     public function mode(
         string $mode,
@@ -153,7 +152,8 @@ final class SessionController extends Controller
      * [POST] /session/locale/{locale}
      * session.locale
      *
-     * Changes the local language, then redirect to the last page.
+     * Changes the local language and updates the user preference language.
+     * After that the user is redirected to the previous page.
      */
     public function locale(Language $language): RedirectResponse
     {
