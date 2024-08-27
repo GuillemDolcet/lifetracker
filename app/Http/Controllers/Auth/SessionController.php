@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Activity;
-use App\Models\Company;
+
 use App\Models\Language;
-use App\Models\Location;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Console\Application as ConsoleApplication;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
@@ -133,113 +130,6 @@ final class SessionController extends Controller
         }
 
         return redirect()->to(RouteServiceProvider::HOME);
-    }
-
-    /**
-     * [POST] /session/company/{company}/{route?}
-     * session.company
-     *
-     * Change session storage company if authorized.
-     *
-     * @throws AuthorizationException
-     */
-    public function company(
-        Company $company,
-        ?string $route = null,
-    ): Renderable|RedirectResponse {
-        $this->authorize('changeCompany', [Company::class, $company]);
-
-        $params = [];
-        if (request()->has('params')) {
-            $params = json_decode((string) request()->input('params'), true);
-        }
-
-        session()->put('company', $company->id);
-
-        if (isset($route)) {
-            return redirect()->route($route, $params);
-        }
-
-        return redirect()->back();
-    }
-
-    /**
-     * [POST] /session/location/{location}/{route?}
-     * session.location
-     *
-     * Change session storage location if authorized.
-     *
-     * @throws AuthorizationException
-     */
-    public function location(
-        ?Location $location = null,
-        ?string $route = null,
-    ): Renderable|RedirectResponse {
-        if ( ! isset($location)) {
-            session()->remove('location');
-        } else {
-            $this->authorize('changeLocation', [
-                Location::class,
-                current_company(),
-                $location,
-            ]);
-
-            $params = [];
-            if (request()->has('params')) {
-                $params = json_decode(
-                    (string) request()->input('params'),
-                    true,
-                );
-            }
-
-            session()->put('location', $location->id);
-
-            if (isset($route)) {
-                return redirect()->route($route, $params);
-            }
-        }
-
-        return redirect()->back();
-    }
-
-    /**
-     * [POST] /session/activity/{activity}/{route?}
-     * session.activity
-     *
-     * Change session storage activity if authorized.
-     *
-     * @throws AuthorizationException
-     */
-    public function activity(
-        ?Activity $activity = null,
-        ?string $route = null,
-    ): Renderable|RedirectResponse {
-        if ( ! isset($activity)) {
-            session()->remove('activity');
-        } else {
-            $this->authorize('changeActivity', [
-                Activity::class,
-                current_company(),
-                $activity,
-                current_location(),
-            ]);
-
-            $params = [];
-            if (request()->has('params')) {
-                $params = json_decode(
-                    (string) request()->input('params'),
-                    true,
-                );
-            }
-
-            session()->put('activity', $activity->id);
-
-            if (isset($route)) {
-                return redirect()->route($route, $params);
-            }
-        }
-
-        return redirect()->back();
     }
 
     /**

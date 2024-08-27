@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Models\Language;
+use App\Models\Social;
 use Illuminate\Database\Seeder;
 
 final class DatabaseSeeder extends Seeder
@@ -32,6 +33,14 @@ final class DatabaseSeeder extends Seeder
         Language::create([
             'name' => 'en',
             'image' => 'en.png',
+        ]);
+
+        Social::create([
+           'name' => 'google'
+        ]);
+
+        Social::create([
+            'name' => 'github'
         ]);
     }
 }

@@ -2,7 +2,13 @@
 
 @section('content')
     <div class="text-center mb-4">
-        <img src="{{ image_url(!session()->has('mode') || session()->get('mode') == 'light' ? 'logo-dark.png' : 'logo-light.png') }}" height="30" alt="{{ config('app.name') }}">
+        <img src="{{ image_url(!session()->has('mode') || session()->get('mode') == 'light' ? 'logo-dark.png' : 'logo-light.png') }}"
+             width="200" alt="{{ config('app.name') }}">
+        <span class="ms-2 me-2">x</span>
+        <a href="{{ config('app.portfolio_url') }}">
+            <img src="{{ image_url(!session()->has('mode') || session()->get('mode') == 'light' ? 'guillem-dolcet-logo-dark.png' : 'guillem-dolcet-logo-light.png') }}"
+                 width="100" alt="Guillem Dolcet">
+        </a>
     </div>
 
     <div class="container-tight">
@@ -28,16 +34,23 @@
                 <a href="{{ route('password.request') }}"
                    class="d-flex justify-content-center mt-3">@lang('auth.forget_password')</a>
             </div>
-            <div class="hr-text">@lang('general.or')</div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <a href="{{ route('google.redirect') }}" class="btn w-100">
-                            <span class="me-2">@svg(google)</span> @langUpperCase('auth.login') @lang('general.with') Google
-                        </a>
+            @if(\App\Models\Social::query()->exists())
+                <div class="hr-text">@lang('general.or')  @lang('auth.login')  @lang('general.with')</div>
+                <div class="card-body">
+                    <div class="row">
+                        @foreach(\App\Models\Social::all() as $social)
+                            <div class="mt-2 mb-2">
+                                <a href="{{ route('socials.redirect', $social->name) }}" class="btn w-100">
+                                    <span class="me-2">
+                                        <img src="{{ image_url('socials/' . $social->name . '.png') }}" alt="{{ $social->name }}">
+                                    </span>
+                                    {{ ucfirst($social->name) }}
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 @endsection
