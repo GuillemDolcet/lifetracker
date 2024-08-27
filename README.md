@@ -22,8 +22,8 @@ Lifetracker application using PHP/Laravel, Stimulus JS, Turbo JS, Tabler.io
 ## How To Deploy
 
 ### For first time only !
-- `git clone https://git.trit.tuv.com/it-sol/bsi/newTRIP.git`
-- `cd newTRIP`
+- `git clone git@github.com:GuillemDolcet/lifetracker.git`
+- `cd lifetracker`
 - `cp .env.example .env`
 - `change .env variables up to you`
 - `cd .docker`
