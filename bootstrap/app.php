@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(static function (Middleware $middleware): void {
         $middleware->web([
             App\Http\Middleware\DDoSProtection::class,
-            App\Http\Middleware\Localization::class
+            App\Http\Middleware\Localization::class,
         ]);
     })
     ->withExceptions(static function (Exceptions $exceptions): void {})

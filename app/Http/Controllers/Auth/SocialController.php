@@ -1,36 +1,88 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Contracts\SocialAuth;
 use App\Http\Controllers\Controller;
+use App\Models\Social;
+use App\Providers\RouteServiceProvider;
+use App\Repositories\Users;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class SocialController extends Controller
+final class SocialController extends Controller
 {
-    public function redirect($driver): RedirectResponse
+    /**
+     * Class constructor.
+     *
+     * @return void
+     */
+    public function __construct(Request $request, protected Users $users)
     {
-        return $this->getService($driver)->redirect();
+        parent::__construct($request);
     }
 
-    public function callback($driver)
+    /**
+     * [GET] /socials/{social}
+     * socials.redirect
+     *
+     * Redirect to social login page if social exists
+     */
+    public function redirect($social): RedirectResponse
     {
-        return $this->getService($driver)->callback();
+        $social = Social::query()->where('name', $social)->firstOrFail();
+
+        return $this->getService($social)->redirect();
     }
 
-    private function getService($driver): SocialAuth
+    /**
+     * [GET] /socials/{social}/callback
+     * socials.callback
+     *
+     * Process the callback of social login, if email exists we attach de social account.
+     * After that the user is redirected to the home page
+     */
+    public function callback($social): RedirectResponse
     {
-        // Convertir el nombre del driver a PascalCase para buscar la clase
-        $serviceClass = 'App\\Services\\' . ucfirst($driver) . 'Service';
+        $social = Social::query()->where('name', $social)->firstOrFail();
 
-        if (!class_exists($serviceClass)) {
-            abort(404, "Driver '$driver' no soportado.");
+        $socialUser = $this->getService($social)->callback();
+
+        $user = $this->users->newQuery()->firstOrCreate(
+            [
+                'email' => $socialUser->resource['email'],
+            ],
+            [
+                'name' => $socialUser->resource['name'],
+                'avatar' => base64_encode(file_get_contents($socialUser->resource['avatar'])),
+            ],
+        );
+
+        $user->socials()->syncWithoutDetaching($social, ['social_auth_id' => $socialUser->resource['social_id']]);
+
+        Auth::guard()->login($user, true);
+
+        return redirect()->intended(RouteServiceProvider::HOME);
+    }
+
+    /**
+     * Get service by Social model
+     */
+    private function getService(Social $social): SocialAuth|RedirectResponse
+    {
+        $serviceClass = 'App\\Services\\Socials\\' . ucfirst($social->name) . 'Service';
+
+        if ( ! class_exists($serviceClass)) {
+            return redirect()->back();
         }
 
         $service = app($serviceClass);
 
-        if (!$service instanceof SocialAuth) {
-            abort(500, "El servicio '$driver' no implementa SocialAuthInterface.");
+        if ( ! $service instanceof SocialAuth) {
+            return redirect()->back();
         }
 
         return $service;

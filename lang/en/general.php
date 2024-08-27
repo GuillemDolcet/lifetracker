@@ -15,4 +15,6 @@ return  [
         'ca' => 'catalan',
         'de' => 'german',
     ],
+    'by' => 'by',
+    'continue' => 'continue',
 ];

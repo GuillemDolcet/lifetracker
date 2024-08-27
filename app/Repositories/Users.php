@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\Models\Company;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
@@ -99,10 +98,6 @@ final class Users extends Repository
 
     /**
      * Finds a user by its email attribute.
-     *
-     * @param string $email
-     * @param array $options
-     * @return User|null
      */
     public function findByEmail(string $email, array $options = []): ?User
     {

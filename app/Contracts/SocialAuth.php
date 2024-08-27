@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Contracts;
 
+use App\Http\Resources\SocialUser;
 use Illuminate\Http\RedirectResponse;
 
 interface SocialAuth
@@ -19,5 +20,5 @@ interface SocialAuth
      *
      * If no attributes are supplied it should be just an alias for `getInstance()`.
      */
-    public function callback(): mixed;
+    public function callback(): SocialUser;
 }

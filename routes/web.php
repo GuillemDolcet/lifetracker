@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\SessionController;
+use App\Http\Controllers\Auth\SocialController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/session/locale/{language}', [SessionController::class, 'locale'])->name('session.locale');
@@ -18,8 +18,8 @@ Route::prefix('auth')->group(static function (): void {
         Route::get('reset-password/{token}', [PasswordController::class, 'resetPassword'])->name('password.reset');
         Route::post('reset-password', [PasswordController::class, 'update'])->name('password.update');
         Route::post('login', [SessionController::class, 'authenticate'])->name('authenticate');
-        Route::get('socials/{driver}', [GoogleController::class, 'redirect'])->name('google.redirect');
-        Route::get('socials/{driver}/callback', [GoogleController::class, 'callback'])->name('google.callback');
+        Route::get('socials/{social}', [SocialController::class, 'redirect'])->name('socials.redirect');
+        Route::get('socials/{social}/callback', [SocialController::class, 'callback'])->name('socials.callback');
     });
     Route::middleware('auth')->group(static function (): void {
         Route::delete('logout', [SessionController::class, 'destroy'])->name('logout');
