@@ -28,14 +28,14 @@ final class Localization
         if ($this->sessionStore->has('locale')) {
             App::setLocale($this->sessionStore->get('locale'));
         } else {
-            $availableLanguages = Language::all()->pluck('name')->toArray();
+            $availableLanguages = Language::all();
             $userLanguages = preg_split('/,|;/', $request->server('HTTP_ACCEPT_LANGUAGE'));
 
             foreach ($availableLanguages as $language) {
-                if(in_array($language, $userLanguages)) {
-                    App::setLocale($language);
+                if(in_array($language->name, $userLanguages)) {
+                    App::setLocale($language->name);
 
-                    $this->sessionStore->put('locale', $language);
+                    $this->sessionStore->put('locale', $language->name);
 
                     if (current_user() instanceof \Illuminate\Contracts\Auth\Authenticatable && current_user()->exists) {
                         current_user()->update([
