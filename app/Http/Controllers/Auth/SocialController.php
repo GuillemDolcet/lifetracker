@@ -61,7 +61,7 @@ final class SocialController extends Controller
             ],
         );
 
-        $user->socials()->syncWithoutDetaching($social, ['social_auth_id' => $socialUser->resource['social_id']]);
+        $user->socials()->syncWithoutDetaching([$social->getKey() => ['social_auth_id' => $socialUser->resource['social_auth_id']]]);
 
         Auth::guard()->login($user, true);
 

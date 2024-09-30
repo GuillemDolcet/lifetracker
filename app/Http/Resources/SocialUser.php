@@ -20,7 +20,7 @@ final class SocialUser extends JsonResource
             'email' => $this->email,
             'name' => $this->name,
             'avatar' => $this->avatar,
-            'social_id' => $this->social_id,
+            'social_auth_id' => $this->social_auth_id,
         ];
     }
 }

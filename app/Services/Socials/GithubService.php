@@ -24,7 +24,7 @@ final class GithubService implements SocialAuth
             'name' => $user->name,
             'email' => $user->email,
             'avatar' => $user->avatar,
-            'social_id' => $user->id,
+            'social_auth_id' => $user->id,
         ]);
     }
 }
