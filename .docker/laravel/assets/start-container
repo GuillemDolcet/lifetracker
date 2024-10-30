@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -eux
 
 # Run a command or default server
 if [ $# -gt 0 ]; then
