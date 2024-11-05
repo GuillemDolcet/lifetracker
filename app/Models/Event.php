@@ -27,7 +27,8 @@ final class Event extends Model
         'description',
         'start_date',
         'end_date',
-        'all_day',
+        'color',
+        'is_all_day',
     ];
 
     // RELATIONS //

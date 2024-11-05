@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('social_id');
             $table->foreign('social_id')->references('id')->on('socials')->onDelete('cascade');
             $table->string('event_social_id');
-            $table->unique(['event_id', 'social_id', 'event_social_id']);
+            $table->unique(['event_id', 'social_id']);
             $table->timestamps();
         });
     }

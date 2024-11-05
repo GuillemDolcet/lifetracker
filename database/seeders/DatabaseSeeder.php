@@ -37,6 +37,7 @@ final class DatabaseSeeder extends Seeder
 
         Social::create([
             'name' => 'google',
+            'have_events' => true
         ]);
 
         Social::create([
