@@ -64,13 +64,13 @@ export default class extends Controller {
             const response = await xr.turbo().get(url)
 
             if (!response.ok) {
-                let translation = await xr.get('/translations/trip.errors.request')
+                let translation = await xr.get('/translations/general.errors.request')
 
                 throw new RequestError(await translation.text())
             }
 
             if (response.ok && response.redirected && String(response.url).endsWith('login')) {
-                let translation = await xr.get('translations/trip.errors.auth')
+                let translation = await xr.get('translations/general.errors.auth')
 
                 throw new AuthenticationError(await translation.text())
             }

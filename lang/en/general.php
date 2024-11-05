@@ -17,4 +17,5 @@ return  [
     ],
     'by' => 'by',
     'continue' => 'continue',
+    'home' => 'inicio'
 ];
