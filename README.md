@@ -12,7 +12,7 @@ Lifetracker application using PHP/Laravel, Stimulus JS, Turbo JS, Tabler.io
 
 # Installation
 
-## NewTRIP Requirements
+## Lifetracker Requirements
 - Laravel v11.x
 - PHP v8.3.x
 - PostgreSQL v16.3
@@ -50,7 +50,7 @@ php console up = docker compose up
 
 php console artisan = docker compose exec app php artisan
 
-### NewTRIP App
+### Lifetracker App
 - URL: http://localhost:5000
 
 ### Mail hog

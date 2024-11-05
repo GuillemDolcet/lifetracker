@@ -34,7 +34,7 @@ export default class extends Controller {
     }
 
     async datepickerTargetConnected() {
-        let translation = await xr.get('/translations/trip.clear')
+        let translation = await xr.get('/translations/general.clear')
 
         let text = await translation.text();
 
@@ -82,7 +82,7 @@ export default class extends Controller {
                 const response = await xr.turbo().post(url, {body: data})
 
                 if (!response.ok) {
-                    let translation = await xr.get('/translations/trip.errors.request')
+                    let translation = await xr.get('/translations/general.errors.request')
                     throw new Error(await translation.text())
                 }
 
@@ -116,7 +116,7 @@ export default class extends Controller {
 
     async fileInputChange(e) {
         if (!this.checkFileSize()) {
-            let translation = await xr.get('/translations/trip.errors.filesize')
+            let translation = await xr.get('/translations/general.errors.filesize')
 
             SimpleToast.show('error', await translation.text())
 
@@ -153,7 +153,7 @@ export default class extends Controller {
             const response = await xr.turbo().get(url);
 
             if (!response.ok) {
-                let translation = await xr.get('/translations/trip.errors.request')
+                let translation = await xr.get('/translations/general.errors.request')
                 throw new Error(await translation.text())
             }
 
