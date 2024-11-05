@@ -51,7 +51,7 @@ export default class extends Controller {
                     months: true,
                     years: true
                 },
-                parentEl: $(datepicker).parent('div').element,
+                parentEl: $(datepicker).closest('.modal').get(0),
                 format: "DD-MM-YYYY",
                 resetButton: () => {
                     let btn = document.createElement('button');
@@ -66,7 +66,7 @@ export default class extends Controller {
                     nextMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
                 }
             });
-            datepicker.on('selected', () => {
+            datepicker.on('selected', (date) => {
                 $('.litepicker').hide();
             });
         });

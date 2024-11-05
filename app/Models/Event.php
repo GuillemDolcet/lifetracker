@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -56,6 +57,36 @@ final class Event extends Model
             'event_id',
             'social_id',
         )->withPivot('event_social_id');
+    }
+
+    // SCOPES
+
+    /**
+     * Scope between a range of dates
+     */
+    public function scopeDateRange(Builder $query, string $startDate, string $endDate): void
+    {
+        $query->where($this->qualifyColumn('start_date'), '>=', $startDate)
+            ->where($this->qualifyColumn('end_date'), '<=', $endDate);
+    }
+
+    /**
+     * Scope by one or multiple users
+     */
+    public function scopeUser(
+        Builder $query,
+        User|string|int|array $user,
+    ): void {
+        if (is_array($user)) {
+            $query->whereIn($this->qualifyColumn('user_id'), $user);
+        } elseif ($user instanceof User) {
+            $query->where(
+                $this->qualifyColumn('user_id'),
+                $user->getKey(),
+            );
+        } else {
+            $query->where($this->qualifyColumn('user_id'), $user);
+        }
     }
 
     /**

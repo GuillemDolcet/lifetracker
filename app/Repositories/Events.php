@@ -77,6 +77,12 @@ final class Events extends Repository
         ): ?Event {
             $instance->fill($attributes);
 
+            if (isset($attributes['user'])) {
+                $instance->user()->associate($attributes['user']);
+            } else{
+                $instance->user()->associate(current_user());
+            }
+
             $result = $instance->save();
 
             if ( ! $result) {

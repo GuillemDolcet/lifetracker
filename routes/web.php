@@ -7,10 +7,12 @@ use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TranslationController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/session/locale/{language}', [SessionController::class, 'locale'])->name('session.locale');
 Route::post('/session/mode/{mode}', [SessionController::class, 'mode'])->name('session.mode');
+Route::get('/translations/{translation}', [TranslationController::class, 'get'])->name('translations.get');
 
 Route::prefix('auth')->group(static function (): void {
     Route::middleware('guest')->group(static function (): void {
@@ -33,6 +35,7 @@ Route::middleware('auth')->group(static function (): void {
     //Events
     Route::get('/calendar', [EventsController::class, 'index'])->name('events.index');
     Route::post('/events', [EventsController::class, 'store'])->name('events.store');
+    Route::get('/events', [EventsController::class, 'get'])->name('events.get');
     Route::get('/events/create', [EventsController::class, 'create'])->name('events.create');
     Route::get('/events/{event}/edit', [EventsController::class, 'edit'])->name('events.edit');
     Route::put('/events/{event}', [EventsController::class, 'update'])->name('events.update');
