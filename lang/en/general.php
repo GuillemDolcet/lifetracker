@@ -17,5 +17,9 @@ return  [
     ],
     'by' => 'by',
     'continue' => 'continue',
-    'home' => 'inicio'
+    'calendar' => 'calendar',
+    'events' => 'events',
+    'event' => 'event',
+    'new' => 'new',
+    'home' => 'home'
 ];

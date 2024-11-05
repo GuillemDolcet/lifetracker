@@ -21,6 +21,7 @@
         "fast-glob": "^3.3.2",
         "fs": "^0.0.1-security",
         "fs-extra": "^11.2.0",
+        "fullcalendar": "^6.1.15",
         "imask": "^7.6.0",
         "jquery": "^3.7.1",
         "litepicker": "^2.0.12",

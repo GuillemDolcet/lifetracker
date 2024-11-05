@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\Auth\SocialController;
+use App\Http\Controllers\EventsController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +30,11 @@ Route::prefix('auth')->group(static function (): void {
 
 Route::middleware('auth')->group(static function (): void {
     Route::get('/', [HomeController::class, 'index'])->name('index');
+    //Events
+    Route::get('/calendar', [EventsController::class, 'index'])->name('events.index');
+    Route::post('/events', [EventsController::class, 'store'])->name('events.store');
+    Route::get('/events/create', [EventsController::class, 'create'])->name('events.create');
+    Route::get('/events/{event}/edit', [EventsController::class, 'edit'])->name('events.edit');
+    Route::put('/events/{event}', [EventsController::class, 'update'])->name('events.update');
+    Route::delete('/events/{event}', [EventsController::class, 'destroy'])->name('events.destroy');
 });

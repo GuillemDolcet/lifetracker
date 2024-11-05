@@ -1,11 +1,15 @@
-@php use App\Models\User; @endphp
-<header class="navbar navbar-expand-md navbar-overlap d-print-none" data-bs-theme="dark">
+<header class="navbar navbar-expand-md d-print-none">
     <div class="container-xl">
         <div class="row justify-content-between w-100">
             <ul class="navbar-nav d-flex col-12 col-xl-7 col-lg-7">
                 <li class="nav-item {{ request()->url() == route('index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('index') }}" title="@langUpperCase('general.home')">
                         @svg(home) <span class="nav-link-title ms-2">@langUpperCase('general.home')</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->url() == route('events.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('events.index') }}" title="@langUpperCase('general.calendar')">
+                        @svg(calendar) <span class="nav-link-title ms-2">@langUpperCase('general.calendar')</span>
                     </a>
                 </li>
             </ul>
