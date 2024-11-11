@@ -26,7 +26,7 @@
 @section('content')
     <div class="container-xl">
         <div class="row row-deck row-cards">
-            <div data-controller="event" data-event-target="calendar">
+            <div data-controller="event" data-event-target="calendar" id="calendar">
         </div>
     </div>
 @endsection

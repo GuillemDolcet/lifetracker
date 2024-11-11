@@ -73,7 +73,9 @@ export default class extends Controller {
     }
 
     async submitRemote(e) {
-        e.preventDefault()
+        if (e) {
+            e.preventDefault()
+        }
 
         if (this.iamForm() && this.confirmed()) {
             const url = this.element.action, data = new FormData(this.element)
@@ -92,6 +94,7 @@ export default class extends Controller {
 
                 const html = await response.text()
                 renderStreamMessage(html)
+                return response;
             } catch (err) {
                 SimpleToast.show('error', err.message)
             }
@@ -137,47 +140,5 @@ export default class extends Controller {
         });
 
         return totalSize <= maxSize;
-    }
-
-    async selectAction(e) {
-        e.preventDefault()
-        try {
-            let target = $(e.target).closest('div').find('select');
-
-            if (target.val() == null || target.val() === '') {
-                return false;
-            }
-
-            let url = target.data('url').replace('value', target.val());
-
-            const response = await xr.turbo().get(url);
-
-            if (!response.ok) {
-                let translation = await xr.get('/translations/general.errors.request')
-                throw new Error(await translation.text())
-            }
-
-            if (response.redirected) {
-                return visit(response.url, {action: 'replace'})
-            }
-
-            target.find(`option[value="${target.val()}"]`).attr('disabled','disabled');
-
-            target.val('').change();
-
-            const html = await response.text()
-
-            renderStreamMessage(html)
-        } catch (err) {
-            SimpleToast.show('error', err.message)
-        }
-    }
-
-    remove({ params: { id, select, option } }) {
-        let selectTarget = $('#' + select);
-
-        selectTarget.find(`option[value="${option}"]`).removeAttr('disabled');
-
-        $('#' + id).remove()
     }
 }

@@ -39,5 +39,6 @@ Route::middleware('auth')->group(static function (): void {
     Route::get('/events/create', [EventsController::class, 'create'])->name('events.create');
     Route::get('/events/{event}/edit', [EventsController::class, 'edit'])->name('events.edit');
     Route::put('/events/{event}', [EventsController::class, 'update'])->name('events.update');
+    Route::put('/events/{event}/dates', [EventsController::class, 'updateDates'])->name('events.update.dates');
     Route::delete('/events/{event}', [EventsController::class, 'destroy'])->name('events.destroy');
 });

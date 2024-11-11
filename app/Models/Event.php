@@ -67,7 +67,7 @@ final class Event extends Model
     public function scopeDateRange(Builder $query, string $startDate, string $endDate): void
     {
         $query->where($this->qualifyColumn('start_date'), '>=', $startDate)
-            ->where($this->qualifyColumn('end_date'), '<=', $endDate);
+            ->orWhere($this->qualifyColumn('end_date'), '<=', $endDate);
     }
 
     /**
@@ -97,8 +97,8 @@ final class Event extends Model
     protected function casts(): array
     {
         return [
-            'start_date' => 'date',
-            'end_date' => 'date',
+            'start_date' => 'datetime',
+            'end_date' => 'datetime',
         ];
     }
 }

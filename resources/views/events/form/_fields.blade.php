@@ -13,15 +13,6 @@
         @enderror
     </div>
 
-    <div class="col-12 mt-2 mb-2">
-        <label class="form-label fw-bold" for="description">@langUpperCase('general.description')</label>
-        <textarea id="description" name="description" class="form-control @error('description') is-invalid @enderror"
-                  rows="4" maxlength="500">{{ old('description', $event->description) }}</textarea>
-        @error('description')
-        <div class="text-danger fs-5">{{ $message }}</div>
-        @enderror
-    </div>
-
     <div class="col-12 col-xl-6 mt-2 mb-2">
         <label class="form-label fw-bold" for="start_date">
             @langUpperCase('general.start_date') <sup class="text-danger fs-xs">*</sup>
@@ -29,14 +20,21 @@
         <div class="input-group">
             <span class="input-group-text">@svg(calendar)</span>
             <input
-                class="form-control @error('start_date') is-invalid @enderror"
+                class="form-control @error('start_date.date') is-invalid @enderror"
                 data-form-target="datepicker"
-                id="start_date"
-                name="start_date"
-                value="{{ old('start_date', $event->exists ? $event->start_date->format('d-m-Y') : '') }}"
+                id="start_date[date]"
+                name="start_date[date]"
+                value="{{ old('start_date.date', $event->exists ? $event->start_date->format('d-m-Y') : \Carbon\Carbon::now()->format('d-m-Y')) }}"
                 data-single-mode="true">
+            <span class="input-group-text">@svg(clock)</span>
+            <input
+                class="form-control @error('start_date.hour') is-invalid @enderror"
+                type="time"
+                id="start_date[hour]"
+                name="start_date[hour]"
+                value="{{ old('start_date.hour', $event->exists ? $event->start_date->format('H:i') : '00:00') }}">
         </div>
-        @error('start_date')
+        @error('start_date.*')
         <div class="text-danger fs-5">{{ $message }}</div>
         @enderror
     </div>
@@ -48,14 +46,21 @@
         <div class="input-group">
             <span class="input-group-text">@svg(calendar)</span>
             <input
-                class="form-control @error('end_date') is-invalid @enderror"
+                class="form-control @error('end_date.date') is-invalid @enderror"
                 data-form-target="datepicker"
-                id="end_date"
-                name="end_date"
-                value="{{ old('end_date', $event->exists ? $event->end_date->format('d-m-Y') : '') }}"
+                id="end_date[date]"
+                name="end_date[date]"
+                value="{{ old('end_date.date', $event->exists ? $event->end_date->format('d-m-Y') : \Carbon\Carbon::now()->format('d-m-Y')) }}"
                 data-single-mode="true">
+            <span class="input-group-text">@svg(clock)</span>
+            <input
+                class="form-control @error('end_date.hour') is-invalid @enderror"
+                type="time"
+                id="end_date[hour]"
+                name="end_date[hour]"
+                value="{{ old('end_date.hour', $event->exists ? $event->end_date->format('H:i') : '23:59') }}">
         </div>
-        @error('end_time')
+        @error('end_time.*')
         <div class="text-danger fs-5">{{ $message }}</div>
         @enderror
     </div>
@@ -158,6 +163,15 @@
             </label>
         </div>
         @error('is_all_day')
+        <div class="text-danger fs-5">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="col-12 mt-2 mb-2">
+        <label class="form-label fw-bold" for="description">@langUpperCase('general.description')</label>
+        <textarea id="description" name="description" class="form-control @error('description') is-invalid @enderror"
+                  rows="4" maxlength="500">{{ old('description', $event->description) }}</textarea>
+        @error('description')
         <div class="text-danger fs-5">{{ $message }}</div>
         @enderror
     </div>

@@ -26,11 +26,20 @@ final class EventRequest extends FormRequest
         return [
             'title' => ['required', 'min:2', 'max:100'],
             'description' => ['nullable', 'max:500'],
-            'start_date' => ['required', 'date'],
-            'end_date' => [
+            'start_date.date' => [
+                'required',
+                'date'
+            ],
+            'start_date.hour' => [
+                'required',
+            ],
+            'end_date.date' => [
                 'required',
                 'date',
-                'after_or_equal:start_date',
+                'after_or_equal:start_date.date',
+            ],
+            'end_date.hour' => [
+                'required',
             ],
             'color' => [
                 'required',

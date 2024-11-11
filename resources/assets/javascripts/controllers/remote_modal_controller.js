@@ -50,7 +50,9 @@ export default class extends Controller {
     }
 
     toggle(e) {
-        e.preventDefault()
+        if (e) {
+            e.preventDefault()
+        }
 
         this.modalElement = this.buildModal()
 

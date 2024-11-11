@@ -5,7 +5,7 @@
                 <h5 class="modal-title">@langUpperCase('general.new') @langUpperCase('general.event')</h5>
             @else
                 <h5 class="modal-title">
-                    {{ $event->name }}
+                    {{ $event->title }}
                 </h5>
             @endif
             <span class="btn-close" data-bs-dismiss="modal"></span>

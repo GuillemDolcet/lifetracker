@@ -75,6 +75,14 @@ final class Events extends Repository
             $instance,
             $attributes
         ): ?Event {
+            if (isset($attributes['start_date']) && is_array($attributes['start_date'])) {
+                $attributes['start_date'] = $attributes['start_date']['date'] . $attributes['start_date']['hour'];
+            }
+
+            if (isset($attributes['end_date']) && is_array($attributes['end_date'])) {
+                $attributes['end_date'] = $attributes['end_date']['date'] . $attributes['end_date']['hour'];
+            }
+
             $instance->fill($attributes);
 
             if (isset($attributes['user'])) {
