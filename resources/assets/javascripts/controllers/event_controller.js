@@ -31,11 +31,13 @@ export default class extends Controller {
             events: this.fetchEvents,
             locale: document.documentElement.lang || 'en',
             timeZone: 'Europe/Madrid',
+            contentHeight: 'auto',
             firstDay: 1,
             eventDrop: this.handleEventDropAndResize,
             eventResize: this.handleEventDropAndResize,
             select: function(info) {
-                that.openModal();
+                console.log(info)
+                that.openModal(null, info.startStr, info.endStr);
             },
             eventClick: function(info) {
                 info.jsEvent.preventDefault();
@@ -89,7 +91,11 @@ export default class extends Controller {
     openModal(id, start, end) {
         let modal = new RemoteModal();
         modal.targetValue = '#event-form-modal';
-        modal.urlValue = '/events/create';
+        let params = new URLSearchParams({
+            start: start,
+            end: end
+        })
+        modal.urlValue = '/events/create?' + params;
         if (id) {
             modal.urlValue = `/events/${id}/edit`;
         }

@@ -24,7 +24,7 @@
                 data-form-target="datepicker"
                 id="start_date[date]"
                 name="start_date[date]"
-                value="{{ old('start_date.date', $event->exists ? $event->start_date->format('d-m-Y') : \Carbon\Carbon::now()->format('d-m-Y')) }}"
+                value="{{ old('start_date.date', $event->exists ? $event->start_date->format('d-m-Y') : (isset($startDate) ? \Carbon\Carbon::parse($startDate)->format('d-m-Y') : \Carbon\Carbon::now()->format('d-m-Y'))) }}"
                 data-single-mode="true">
             <span class="input-group-text">@svg(clock)</span>
             <input
@@ -32,7 +32,7 @@
                 type="time"
                 id="start_date[hour]"
                 name="start_date[hour]"
-                value="{{ old('start_date.hour', $event->exists ? $event->start_date->format('H:i') : '00:00') }}">
+                value="{{ old('end_date.hour', $event->exists ? $event->start_date->format('H:i') : (isset($startDate) ? \Carbon\Carbon::parse($startDate)->format('H:i') : '23:59')) }}">
         </div>
         @error('start_date.*')
         <div class="text-danger fs-5">{{ $message }}</div>
@@ -50,7 +50,7 @@
                 data-form-target="datepicker"
                 id="end_date[date]"
                 name="end_date[date]"
-                value="{{ old('end_date.date', $event->exists ? $event->end_date->format('d-m-Y') : \Carbon\Carbon::now()->format('d-m-Y')) }}"
+                value="{{ old('end_date.date', $event->exists ? $event->end_date->format('d-m-Y') : (isset($endDate) ? \Carbon\Carbon::parse($endDate)->format('d-m-Y') : \Carbon\Carbon::now()->format('d-m-Y'))) }}"
                 data-single-mode="true">
             <span class="input-group-text">@svg(clock)</span>
             <input
@@ -58,7 +58,7 @@
                 type="time"
                 id="end_date[hour]"
                 name="end_date[hour]"
-                value="{{ old('end_date.hour', $event->exists ? $event->end_date->format('H:i') : '23:59') }}">
+                value="{{ old('end_date.hour', $event->exists ? $event->end_date->format('H:i') : (isset($endDate) ? \Carbon\Carbon::parse($endDate)->format('H:i') : '23:59')) }}">
         </div>
         @error('end_time.*')
         <div class="text-danger fs-5">{{ $message }}</div>

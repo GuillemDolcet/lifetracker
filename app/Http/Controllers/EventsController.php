@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventCreateRequest;
 use App\Http\Requests\EventDateRequest;
 use App\Http\Requests\EventGetRequest;
 use App\Http\Requests\EventRequest;
@@ -74,12 +75,21 @@ final class EventsController extends Controller
      *
      * @throws BindingResolutionException
      */
-    public function create(): RedirectResponse|Response|ResponseFactory
+    public function create(EventCreateRequest $request): RedirectResponse|Response|ResponseFactory
     {
+        $validated = $request->validated();
+
         if ($this->wantsTurboStream($this->request)) {
             $event = $this->events->build();
 
-            return $this->renderTurboStream('events.form.modal_stream', ['event' => $event]);
+            return $this->renderTurboStream(
+                'events.form.modal_stream',
+                [
+                    'event' => $event,
+                    'startDate' => $validated['start'] ?? null,
+                    'endDate' => $validated['end'] ?? null,
+                ]
+            );
         }
 
         return redirect()->back();
