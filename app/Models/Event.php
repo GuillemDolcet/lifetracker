@@ -89,6 +89,16 @@ final class Event extends Model
         }
     }
 
+    // Functions
+
+    /*
+     * Returns if the events belongs to user
+     */
+    public function belongsToUser(User $user): bool
+    {
+        return $this->user->getKey() === $user->getKey();
+    }
+
     /**
      * Get the attributes that should be cast.
      *

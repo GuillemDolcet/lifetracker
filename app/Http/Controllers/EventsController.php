@@ -11,6 +11,7 @@ use App\Http\Requests\EventRequest;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
 use App\Repositories\Events;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Console\Application as ConsoleApplication;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Support\Arrayable;
@@ -101,11 +102,13 @@ final class EventsController extends Controller
      *
      * Returns the company modal stream view for update.
      *
-     * @throws BindingResolutionException
+     * @throws BindingResolutionException|AuthorizationException
      */
     public function edit(
         Event $event,
     ): RedirectResponse|Response|ResponseFactory {
+        $this->authorize('update', $event);
+
         if ($this->wantsTurboStream($this->request)) {
             return $this->renderTurboStream('events.form.modal_stream', [
                 'event' => $event,
@@ -124,6 +127,7 @@ final class EventsController extends Controller
     public function store(EventRequest $request): JsonResponse
     {
         $event = $this->events->create($request->validated());
+
         if (
             $event instanceof Event
         ) {
@@ -146,12 +150,15 @@ final class EventsController extends Controller
      * events.update
      *
      * Validate request and update Event.
+     * @throws AuthorizationException
      */
     public function update(
         EventRequest $request,
         Event $event,
     ): JsonResponse
     {
+        $this->authorize('update', $event);
+
         if ($this->events->update($event, $request->validated()) instanceof Event) {
             return response()->json([
                 'status' => 'success',

@@ -4,17 +4,59 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Models\User;
+use App\Policies\EventPolicy;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
+use Symfony\Component\HttpFoundation\Response;
 
 final class EventRequest extends FormRequest
 {
+    /**
+     * User class
+     */
+    protected User $currentUser;
+
     /**
      * The route to redirect to if validation fails.
      *
      * @var string
      */
     protected $redirectRoute = 'events.create';
+
+    /**
+     * Create a new form request instance.
+     */
+    public function __construct(
+        protected EventPolicy $eventPolicy
+    )
+    {
+        parent::__construct();
+        $this->currentUser = current_user();
+    }
+
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        $authorize =
+            $this->event && $this->event->exists
+                ? $this->eventPolicy->update(
+                    $this->currentUser,
+                    $this->event,
+                )
+                : $this->eventPolicy->store($this->currentUser);
+
+        if ( ! $authorize->allowed()) {
+            throw new HttpResponseException(
+                response()->setStatusCode(Response::HTTP_FORBIDDEN)
+            );
+        }
+
+        return true;
+    }
 
     /**
      * Get the validation rules that apply to the request.
