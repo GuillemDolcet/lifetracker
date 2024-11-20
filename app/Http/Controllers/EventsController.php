@@ -128,9 +128,7 @@ final class EventsController extends Controller
     {
         $event = $this->events->create($request->validated());
 
-        if (
-            $event instanceof Event
-        ) {
+        if ($event instanceof Event) {
             return response()->json([
                 'status' => 'success',
                 'message' => __('general.responses.success.create.event'),
@@ -150,15 +148,12 @@ final class EventsController extends Controller
      * events.update
      *
      * Validate request and update Event.
-     * @throws AuthorizationException
      */
     public function update(
         EventRequest $request,
         Event $event,
     ): JsonResponse
     {
-        $this->authorize('update', $event);
-
         if ($this->events->update($event, $request->validated()) instanceof Event) {
             return response()->json([
                 'status' => 'success',

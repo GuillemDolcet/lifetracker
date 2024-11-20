@@ -20,7 +20,7 @@
         <div class="input-group">
             <span class="input-group-text">@svg(calendar)</span>
             <input
-                class="form-control @error('start_date.date') is-invalid @enderror"
+                class="form-control @error('start_date') is-invalid @enderror"
                 data-form-target="datepicker"
                 id="start_date[date]"
                 name="start_date[date]"
@@ -28,15 +28,15 @@
                 data-single-mode="true">
             <span class="input-group-text">@svg(clock)</span>
             <input
-                class="form-control @error('start_date.hour') is-invalid @enderror"
+                class="form-control @error('start_date') is-invalid @enderror"
                 data-event-target="allDayAffected"
                 type="time"
                 id="start_date[hour]"
                 name="start_date[hour]"
                 {{ $event->exists && $event->is_all_day ? 'disabled="disabled"' : '' }}
-                value="{{ old('end_date.hour', $event->exists ? $event->start_date->format('H:i') : (isset($startDate) ? \Carbon\Carbon::parse($startDate)->format('H:i') : '23:59')) }}">
+                value="{{ old('start_date.hour', $event->exists ? $event->start_date->format('H:i') : (isset($startDate) ? \Carbon\Carbon::parse($startDate)->format('H:i') : '00:00')) }}">
         </div>
-        @error('start_date.*')
+        @error('start_date')
         <div class="text-danger fs-5">{{ $message }}</div>
         @enderror
     </div>
@@ -48,7 +48,7 @@
         <div class="input-group">
             <span class="input-group-text">@svg(calendar)</span>
             <input
-                class="form-control @error('end_date.date') is-invalid @enderror"
+                class="form-control @error('end_date') is-invalid @enderror"
                 data-event-target="allDayAffected"
                 data-form-target="datepicker"
                 id="end_date[date]"
@@ -58,7 +58,7 @@
                 data-single-mode="true">
             <span class="input-group-text">@svg(clock)</span>
             <input
-                class="form-control @error('end_date.hour') is-invalid @enderror"
+                class="form-control @error('end_date') is-invalid @enderror"
                 data-event-target="allDayAffected"
                 type="time"
                 id="end_date[hour]"
@@ -66,7 +66,7 @@
                 {{ $event->exists && $event->is_all_day ? 'disabled="disabled"' : '' }}
                 value="{{ old('end_date.hour', $event->exists && $event->end_date ? $event->end_date->format('H:i') : (isset($endDate) ? \Carbon\Carbon::parse($endDate)->format('H:i') : '23:59')) }}">
         </div>
-        @error('end_time.*')
+        @error('end_date')
         <div class="text-danger fs-5">{{ $message }}</div>
         @enderror
     </div>

@@ -29,6 +29,7 @@ export default class extends Controller {
             dayMaxEvents: true,
             selectable: true,
             events: this.fetchEvents,
+            allDayDefault: false,
             locale: document.documentElement.lang || 'en',
             timeZone: 'Europe/Madrid',
             contentHeight: 'auto',
@@ -104,21 +105,20 @@ export default class extends Controller {
     changeAllDay(event) {
         const triggeringElement = event.currentTarget;
 
-        // Verificar si el valor del elemento es "true" (como cadena)
         const isTrue = triggeringElement.value === "true";
 
-        console.log(this.allDayAffectedTargets)
-        // Habilitar o deshabilitar los targets
         this.allDayAffectedTargets.forEach((element) => {
             if (isTrue) {
-                element.setAttribute("disabled", "disabled"); // Añadir el atributo
+                element.setAttribute("disabled", "disabled");
             } else {
-                element.removeAttribute("disabled"); // Quitar el atributo
+                element.removeAttribute("disabled");
             }
         });
     }
 
-    async submitForm(){
+    async submitForm(e){
+        e.preventDefault();
+
         const url = this.element.getAttribute("action"), data = new FormData(this.element)
 
         try {

@@ -109,6 +109,7 @@ final class Event extends Model
         return [
             'start_date' => 'datetime',
             'end_date' => 'datetime',
+            'is_all_day' => 'boolean'
         ];
     }
 }

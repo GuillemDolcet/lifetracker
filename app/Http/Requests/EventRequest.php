@@ -6,6 +6,7 @@ namespace App\Http\Requests;
 
 use App\Models\User;
 use App\Policies\EventPolicy;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
@@ -72,26 +73,50 @@ final class EventRequest extends FormRequest
                 'required',
                 Rule::in(['true', 'false'])
             ],
-            'start_date.date' => [
+            'start_date' => [
                 'required',
                 'date'
             ],
-            'start_date.hour' => [
-                'required_if:is_all_day,==,false'
-            ],
-            'end_date.date' => [
+            'end_date' => [
                 'required_if:is_all_day,==,false',
                 'date',
-                'after_or_equal:start_date.date',
-            ],
-            'end_date.hour' => [
-                'required_if:is_all_day,==,false'
+                'after_or_equal:start_date',
             ],
             'color' => [
                 'required',
                 'regex:/^#([a-f0-9]{6}|[a-f0-9]{3})$/i'
             ],
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $isAllDay = $this->input('is_all_day') === true || $this->input('is_all_day') === 'true';
+
+        if (!$isAllDay) {
+            $this->merge([
+                'start_date' => $this->combineDateTime($this->input('start_date')['date'], $this->input('start_date')['hour'] ?? null),
+                'end_date' => $this->combineDateTime($this->input('end_date')['date'], $this->input('end_date')['hour'] ?? null),
+            ]);
+        } else {
+            $this->merge([
+                'start_date' => $this->input('start_date')['date'],
+                'end_date' => null,
+            ]);
+        }
+    }
+
+    private function combineDateTime($date, $time): ?Carbon
+    {
+        if (!$date || !$time) {
+            return null;
+        }
+
+        try {
+            return Carbon::createFromFormat('d-m-Y H:i', "$date $time");
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     /**

@@ -75,18 +75,6 @@ final class Events extends Repository
             $instance,
             $attributes
         ): ?Event {
-            if (isset($attributes['is_all_day']) && $attributes['is_all_day'] === 'false') {
-                if (isset($attributes['start_date']) && is_array($attributes['start_date'])) {
-                    $attributes['start_date'] = $attributes['start_date']['date'] . $attributes['start_date']['hour'];
-                }
-
-                if (isset($attributes['end_date']) && is_array($attributes['end_date'])) {
-                    $attributes['end_date'] = $attributes['end_date']['date'] . $attributes['end_date']['hour'];
-                }
-            } else if (isset($attributes['start_date']) && is_array($attributes['start_date'])) {
-                $attributes['start_date'] = $attributes['start_date']['date'];
-            }
-
             $instance->fill($attributes);
 
             if (isset($attributes['user'])) {
