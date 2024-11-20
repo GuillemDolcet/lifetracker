@@ -133,14 +133,14 @@ final class EventsController extends Controller
         ) {
             return response()->json([
                 'status' => 'success',
-                'message' => __('general.responses.success-create-event'),
+                'message' => __('general.responses.success.create.event'),
                 'data' => new EventResource($event)
             ]);
         }
 
         return response()
             ->json([
-                'status' => 'error', 'message' => __('general.responses.error-create-event')
+                'status' => 'error', 'message' => __('general.responses.error.create.event')
             ])
             ->setStatusCode(500);
     }
@@ -162,13 +162,13 @@ final class EventsController extends Controller
         if ($this->events->update($event, $request->validated()) instanceof Event) {
             return response()->json([
                 'status' => 'success',
-                'message' => __('general.responses.success-update-event'),
+                'message' => __('general.responses.success.update.event'),
                 'data' => new EventResource($event)
             ]);
         }
 
         return response()
-            ->json(['status' => 'error', 'message' => __('general.responses.error-update-event')])
+            ->json(['status' => 'error', 'message' => __('general.responses.error.update.event')])
             ->setStatusCode(500);
     }
 
@@ -184,11 +184,11 @@ final class EventsController extends Controller
     ): JsonResponse
     {
         if ($this->events->update($event, $request->validated()) instanceof Event) {
-            return response()->json(['status' => 'success', 'message' => __('trip.responses.success-update-inspection')]);
+            return response()->json(['status' => 'success', 'message' => __('general.responses.success.update.event')]);
         }
 
         return response()
-            ->json(['status' => 'error', 'message' => __('trip.responses.error-update-inspection')])
+            ->json(['status' => 'error', 'message' => __('general.responses.error.update.event')])
             ->setStatusCode(500);
     }
 

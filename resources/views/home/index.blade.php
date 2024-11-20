@@ -10,15 +10,6 @@
                             Overview
                         </h2>
                     </div>
-                    <div class="btn-list">
-                        <a href="#" class="btn btn-primary d-sm-inline-block fw-bold"
-                           data-controller="remote-modal"
-                           data-action="remote-modal#toggle"
-                           data-remote-modal-target-value="#user-form-modal">
-                            @svg(users-plus) <span
-                                class="ms-2">@langUpperCase('trip.add') @langUpperCase('trip.user')</span>
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>

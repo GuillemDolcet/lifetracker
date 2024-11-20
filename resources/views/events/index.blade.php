@@ -15,7 +15,7 @@
                        data-action="remote-modal#toggle"
                        data-remote-modal-url-value="{{ route('events.create') }}"
                        data-remote-modal-target-value="#event-form-modal">
-                        @svg(plus) <span class="ms-2">@langUpperCase('general.new') @lang('general.event')</span>
+                        @svg(plus) <span class="ms-2">@langUpperCase('general.news.event')</span>
                     </a>
                 </div>
             </div>

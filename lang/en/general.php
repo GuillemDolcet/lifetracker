@@ -18,6 +18,7 @@ return  [
     'by' => 'by',
     'continue' => 'continue',
     'calendar' => 'calendar',
+    'clear' => 'clear',
     'events' => 'events',
     'event' => 'event',
     'new' => 'new',
@@ -35,6 +36,30 @@ return  [
             'array' => 'this field is not a list of values',
             'file' => 'the file is invalid',
         ],
+    'responses' => [
+        'success' => [
+            'create' => [
+                'event' => 'Event <b class="text-success">created</b>',
+            ],
+            'update' => [
+                'event' => 'Event <b class="text-success">updated</b>',
+            ],
+            'delete' => [
+                'event' => 'Event <b class="text-success">deleted</b>',
+            ]
+        ],
+        'error' => [
+            'create' => [
+                'event' => '<b class="text-danger">The event could not be created</b>',
+            ],
+            'update' => [
+                'event' => '<b class="text-danger">The event could not be updated</b>',
+            ],
+            'delete' => [
+                'event' => '<b class="text-danger">The event could not be deleted</b>',
+            ]
+        ]
+    ],
     'title' => 'title',
     'description' => 'description',
     'start_date' => 'start date',
@@ -43,4 +68,19 @@ return  [
     'color' => 'color',
     'yes' => 'yes',
     'no' => 'no',
+    'news' => [
+        'event' => 'new event',
+    ],
+    'deletes' => [
+        'event' => 'delete event',
+    ],
+    'save_changes' => 'save changes',
+    'policies' =>
+        [
+            'deny' =>
+                [
+                    'general' => '<b class="text-danger">You do not have permissions</b> to do this action',
+                    'no_role' => '<b class="text-danger">You cannot</b> assign a user without a role',
+                ],
+        ],
 ];

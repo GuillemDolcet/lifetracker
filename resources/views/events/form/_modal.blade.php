@@ -2,7 +2,7 @@
     <div class="modal-content">
         <div class="modal-header d-flex align-items-center">
             @unless ($event->exists)
-                <h5 class="modal-title">@langUpperCase('general.new') @langUpperCase('general.event')</h5>
+                <h5 class="modal-title">@langUpperCase('general.news.event')</h5>
             @else
                 <h5 class="modal-title">
                     {{ $event->title }}

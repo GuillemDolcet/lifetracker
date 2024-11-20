@@ -170,7 +170,7 @@ export default class extends Controller {
 
             existingEvent.remove();
 
-            let translation = await xr.get('/translations/general.responses.success-delete-event')
+            let translation = await xr.get('/translations/general.responses.success.delete.event')
 
             SimpleToast.show('success', await translation.text())
         } catch (err) {
