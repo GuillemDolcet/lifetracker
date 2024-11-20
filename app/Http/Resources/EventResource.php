@@ -13,7 +13,8 @@ class EventResource extends JsonResource
             'title' => $this->title,
             'start' => $this->start_date->toIso8601String(),
             'end' => $this->end_date->toIso8601String(),
-            'color' => $this->color
+            'color' => $this->color,
+            'allDay' => $this->is_all_day
         ];
     }
 }
