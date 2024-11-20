@@ -68,29 +68,29 @@ final class EventRequest extends FormRequest
         return [
             'title' => ['required', 'min:2', 'max:100'],
             'description' => ['nullable', 'max:500'],
+            'is_all_day' => [
+                'required',
+                Rule::in(['true', 'false'])
+            ],
             'start_date.date' => [
                 'required',
                 'date'
             ],
             'start_date.hour' => [
-                'required',
+                'required_if:is_all_day,==,false'
             ],
             'end_date.date' => [
-                'required',
+                'required_if:is_all_day,==,false',
                 'date',
                 'after_or_equal:start_date.date',
             ],
             'end_date.hour' => [
-                'required',
+                'required_if:is_all_day,==,false'
             ],
             'color' => [
                 'required',
                 'regex:/^#([a-f0-9]{6}|[a-f0-9]{3})$/i'
             ],
-            'is_all_day' => [
-                'required',
-                Rule::in(['true', 'false'])
-            ]
         ];
     }
 

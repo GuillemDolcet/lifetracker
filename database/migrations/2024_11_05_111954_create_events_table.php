@@ -20,7 +20,7 @@ class CreateEventsTable extends Migration
             $table->string('title', 100);
             $table->text('description')->nullable();
             $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->timestamp('end_date')->nullable();
             $table->string('color', 7);
             $table->boolean('is_all_day')->default(false);
             $table->timestamps();

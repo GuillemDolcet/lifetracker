@@ -29,9 +29,11 @@
             <span class="input-group-text">@svg(clock)</span>
             <input
                 class="form-control @error('start_date.hour') is-invalid @enderror"
+                data-event-target="allDayAffected"
                 type="time"
                 id="start_date[hour]"
                 name="start_date[hour]"
+                {{ $event->exists && $event->is_all_day ? 'disabled="disabled"' : '' }}
                 value="{{ old('end_date.hour', $event->exists ? $event->start_date->format('H:i') : (isset($startDate) ? \Carbon\Carbon::parse($startDate)->format('H:i') : '23:59')) }}">
         </div>
         @error('start_date.*')
@@ -47,18 +49,22 @@
             <span class="input-group-text">@svg(calendar)</span>
             <input
                 class="form-control @error('end_date.date') is-invalid @enderror"
+                data-event-target="allDayAffected"
                 data-form-target="datepicker"
                 id="end_date[date]"
                 name="end_date[date]"
-                value="{{ old('end_date.date', $event->exists ? $event->end_date->format('d-m-Y') : (isset($endDate) ? \Carbon\Carbon::parse($endDate)->format('d-m-Y') : \Carbon\Carbon::now()->format('d-m-Y'))) }}"
+                value="{{ old('end_date.date', $event->exists && $event->end_date ? $event->end_date->format('d-m-Y') : (isset($endDate) ? \Carbon\Carbon::parse($endDate)->format('d-m-Y') : \Carbon\Carbon::now()->format('d-m-Y'))) }}"
+                {{ $event->exists && $event->is_all_day ? 'disabled="disabled"' : '' }}
                 data-single-mode="true">
             <span class="input-group-text">@svg(clock)</span>
             <input
                 class="form-control @error('end_date.hour') is-invalid @enderror"
+                data-event-target="allDayAffected"
                 type="time"
                 id="end_date[hour]"
                 name="end_date[hour]"
-                value="{{ old('end_date.hour', $event->exists ? $event->end_date->format('H:i') : (isset($endDate) ? \Carbon\Carbon::parse($endDate)->format('H:i') : '23:59')) }}">
+                {{ $event->exists && $event->is_all_day ? 'disabled="disabled"' : '' }}
+                value="{{ old('end_date.hour', $event->exists && $event->end_date ? $event->end_date->format('H:i') : (isset($endDate) ? \Carbon\Carbon::parse($endDate)->format('H:i') : '23:59')) }}">
         </div>
         @error('end_time.*')
         <div class="text-danger fs-5">{{ $message }}</div>
@@ -152,12 +158,14 @@
             <label class="form-selectgroup-item w-7">
                 <input type="radio" name="is_all_day" value="false"
                        class="form-selectgroup-input @error('is_all_day') is-invalid @enderror"
+                       data-action="click->event#changeAllDay"
                     {{ (isset($event) && $event->exists && !$event->is_all_day && !old('is_all_day')) || old('is_all_day') == 'false' || !old('is_all_day') ? 'checked' : '' }}>
                 <span class="form-selectgroup-label">@langUpperCase('general.no')</span>
             </label>
             <label class="form-selectgroup-item w-7">
-                <input type="radio" name="is_all_day" value="true" data-action="change->"
+                <input type="radio" name="is_all_day" value="true"
                        class="form-selectgroup-input @error('is_all_day') is-invalid @enderror"
+                       data-action="click->event#changeAllDay"
                     {{ (isset($event) && $event->exists && $event->is_all_day && !old('is_all_day')) || old('is_all_day') == 'true' ? 'checked' : '' }}>
                 <span class="form-selectgroup-label">@langUpperCase('general.yes')</span>
             </label>

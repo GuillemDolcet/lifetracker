@@ -9,16 +9,16 @@
         @include('events.form._fields')
     </div>
     <div class="modal-footer">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between w-100">
             @if($event->exists)
                 <button type="button" class="btn btn-danger fw-bold" data-action="event#submitDeleteForm">
                     @svg(trash) <span class="ms-1">@langUpperCase('general.deletes.event')</span>
                 </button>
-                <button type="button" class="btn btn-primary me-2 fw-bold" data-action="event#submitForm">
+                <button type="button" class="btn btn-primary fw-bold" data-action="event#submitForm">
                     @svg(save) <span class="ms-1">@langUpperCase('general.save_changes')</span>
                 </button>
             @else
-                <button type="button" class="btn btn-primary ms-auto me-2 fw-bold" data-action="event#submitForm">
+                <button type="button" class="btn btn-primary ms-auto fw-bold" data-action="event#submitForm">
                     @svg(plus) <span class="ms-2">@langUpperCase('general.news.event')</span>
                 </button>
             @endif

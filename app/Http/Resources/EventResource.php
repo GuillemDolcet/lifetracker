@@ -12,7 +12,7 @@ class EventResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'start' => $this->start_date->toIso8601String(),
-            'end' => $this->end_date->toIso8601String(),
+            'end' => $this->end_date ? $this->end_date->toIso8601String() : null,
             'color' => $this->color,
             'allDay' => $this->is_all_day
         ];

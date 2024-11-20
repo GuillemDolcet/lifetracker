@@ -13,7 +13,7 @@ import {renderStreamMessage} from "@hotwired/turbo";
 
 export default class extends Controller {
 
-    static targets = [ "calendar", "form" ];
+    static targets = [ "calendar", "form", "allDayAffected" ];
 
     calendarTargetConnected(){
         let that = this;
@@ -36,7 +36,6 @@ export default class extends Controller {
             eventDrop: this.handleEventDropAndResize,
             eventResize: this.handleEventDropAndResize,
             select: function(info) {
-                console.log(info)
                 that.openModal(null, info.startStr, info.endStr);
             },
             eventClick: function(info) {
@@ -102,6 +101,23 @@ export default class extends Controller {
         modal.toggle();
     }
 
+    changeAllDay(event) {
+        const triggeringElement = event.currentTarget;
+
+        // Verificar si el valor del elemento es "true" (como cadena)
+        const isTrue = triggeringElement.value === "true";
+
+        console.log(this.allDayAffectedTargets)
+        // Habilitar o deshabilitar los targets
+        this.allDayAffectedTargets.forEach((element) => {
+            if (isTrue) {
+                element.setAttribute("disabled", "disabled"); // Añadir el atributo
+            } else {
+                element.removeAttribute("disabled"); // Quitar el atributo
+            }
+        });
+    }
+
     async submitForm(){
         const url = this.element.getAttribute("action"), data = new FormData(this.element)
 
@@ -124,8 +140,6 @@ export default class extends Controller {
             let json = await response.json()
 
             let eventData = json.data
-
-            console.log(eventData)
 
             let existingEvent = window.calendar.getEventById(eventData.id)
 
