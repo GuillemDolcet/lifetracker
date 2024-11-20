@@ -73,7 +73,7 @@
             <div class="col-auto">
                 <label class="form-colorinput">
                     <input name="color" type="radio" value="#0818A8" class="form-colorinput-input" required
-                        {{ old('color') == '#0818A8' || ($event->exists && !old('color') && $event->color == '#0818A8') ? 'checked' : '' }}>
+                        {{ old('color') == '#0818A8' || ($event->exists && !old('color') && $event->color == '#0818A8') || (!old('color') && !$event->exists) ? 'checked' : '' }}>
                     <span class="form-colorinput-color bg-blue"></span>
                 </label>
             </div>

@@ -1,6 +1,6 @@
 volumes:
-    postgres:
-        name: 'postgres16'
+    lifetracker-postgres:
+        name: 'lifetracker-postgres'
         driver: local
 
     redis:
@@ -12,14 +12,14 @@ networks:
 
 services:
     db:
-        image: postgresql
+        image: lifetracker-postgresql
         environment:
             POSTGRES_USER: ${DB_USERNAME}
             POSTGRES_PASSWORD: ${DB_PASSWORD}
         ports:
             - 5432:5432
         volumes:
-            - postgres:/var/lib/postgresql/data
+            - lifetracker-postgres:/var/lib/postgresql/data
         networks:
             - nw
 
@@ -41,7 +41,7 @@ services:
             - nw
 
     assets:
-        image: laravel-assets
+        image: lifetracker-laravel-assets
         ports:
             - 5173:5173
         user: node
@@ -51,7 +51,7 @@ services:
             - nw
 
     app:
-        image: laravel
+        image: lifetracker-laravel
         depends_on:
             - db
             - redis

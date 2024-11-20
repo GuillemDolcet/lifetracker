@@ -1,25 +1,25 @@
 #!/usr/bin/env bash
 
 echo "Building 'ubuntu' base images"
-docker image build --pull --force-rm --no-cache -t 'ubuntu' ubuntu/
+docker image build --pull --force-rm --no-cache -t 'lifetracker-ubuntu' ubuntu/
 
 echo "Building 'php' base images"
-docker image build --force-rm --no-cache -t 'php' php/
+docker image build --force-rm --no-cache -t 'lifetracker-php' php/
 
 echo "Building 'php xdebug' base images"
-docker image build --force-rm --no-cache -t 'php-xdebug' php/xdebug/
+docker image build --force-rm --no-cache -t 'lifetracker-php-xdebug' php/xdebug/
 
 echo "Building 'node' base images"
-docker image build --pull --force-rm --no-cache -t 'node' node/
+docker image build --pull --force-rm --no-cache -t 'lifetracker-node' node/
 
 echo "Building 'postgresql' base images"
-docker image build --pull --force-rm --no-cache -t 'postgresql' postgresql/
+docker image build --pull --force-rm --no-cache -t 'lifetracker-postgresql' postgresql/
 
 echo "Building 'laravel' images"
-docker image build --force-rm --no-cache -t 'laravel' laravel/
+docker image build --force-rm --no-cache -t 'lifetracker-laravel' laravel/
 
 echo "Building 'laravel xdebug' images"
-docker image build --force-rm --no-cache -t 'laravel-xdebug' laravel/xdebug/
+docker image build --force-rm --no-cache -t 'lifetracker-laravel-xdebug' laravel/xdebug/
 
 echo "Building 'assets' images"
-docker image build --force-rm --no-cache -t 'laravel-assets' laravel/assets/
+docker image build --force-rm --no-cache -t 'lifetracker-laravel-assets' laravel/assets/
