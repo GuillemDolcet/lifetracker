@@ -125,6 +125,8 @@ export default class extends Controller {
 
             let eventData = json.data
 
+            console.log(eventData)
+
             let existingEvent = window.calendar.getEventById(eventData.id)
 
             if (existingEvent) {
@@ -132,16 +134,45 @@ export default class extends Controller {
                 existingEvent.setDates(eventData.start, eventData.end);
                 existingEvent.setProp('color', eventData.color);
             } else {
-                window.calendar.addEvent({
-                    id: eventData.id,
-                    title: eventData.title,
-                    start: eventData.start,
-                    end: eventData.end,
-                    description: eventData.description,
-                });
+                window.calendar.addEvent(eventData);
             }
 
             SimpleToast.show(json.status, json.message)
+        } catch (err) {
+            SimpleToast.show('error', err.message)
+        }
+    }
+
+    async submitDeleteForm(){
+        const url = this.element.getAttribute("action"), data = new FormData(this.element)
+
+        let res = url.split("/");
+        let pos = res.indexOf('events');
+        let eventId = res[pos+1];
+
+        try {
+            const response = await xr.turbo().delete(url, {body: data})
+
+            if (!response.ok) {
+                let translation = await xr.get('/translations/general.errors.request')
+                throw new Error(await translation.text())
+            }
+
+            if (!response.redirected) {
+                $('.btn-close').click();
+            } else {
+                const html = await response.text()
+                renderStreamMessage(html)
+                return
+            }
+
+            let existingEvent = window.calendar.getEventById(eventId)
+
+            existingEvent.remove();
+
+            let translation = await xr.get('/translations/general.responses.success-delete-event')
+
+            SimpleToast.show('success', await translation.text())
         } catch (err) {
             SimpleToast.show('error', err.message)
         }

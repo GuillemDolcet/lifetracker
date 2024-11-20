@@ -191,4 +191,21 @@ final class EventsController extends Controller
             ->json(['status' => 'error', 'message' => __('trip.responses.error-update-inspection')])
             ->setStatusCode(500);
     }
+
+    /**
+     * [DELETE] /events/{event}
+     * events.destroy
+     *
+     * Delete event.
+     *
+     * @throws AuthorizationException
+     */
+    public function destroy(Event $event): Response
+    {
+        $this->authorize('delete', [Event::class, $event]);
+
+        $event->delete();
+
+        return response()->noContent();
+    }
 }

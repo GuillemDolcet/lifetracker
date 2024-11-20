@@ -39,4 +39,16 @@ class EventPolicy
 
         return Response::deny(__('general.policies.deny.general'));
     }
+
+    /**
+     * Determine whether the user can update the event.
+     */
+    public function delete(User $logged, Event $event): Response
+    {
+        if ($event->belongsToUser($logged)) {
+            return Response::allow();
+        }
+
+        return Response::deny(__('general.policies.deny.general'));
+    }
 }
